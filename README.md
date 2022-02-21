@@ -1,4 +1,4 @@
-# RTC MOS
+# RTC SCORE
 
 Library to calculate a Mean Opinion Score (MOS) from 1 to 5 for audio and video real time communications.
 

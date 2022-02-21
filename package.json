@@ -1,5 +1,5 @@
 {
-  "name": "rtc_mos",
+  "name": "rtcscore",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
