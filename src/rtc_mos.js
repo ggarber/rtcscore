@@ -15,37 +15,36 @@
  * expectedFrameRate: number; FrameRate of the video source
  */
 function score(stats) {
-  const scores = {};
-  const { audio, video } = normalize(stats);
+  const scores = {}
+  const { audio, video } = normalize(stats)
   if (audio) {
     // Audio MOS calculation is based on E-Model algorithm
     // Assume 20 packetization delay
-    const delay = 20 + audio.bufferDelay + audio.roundTripTime;
-    const pl = audio.packetLoss / 100;
-    const R0 = 100;
-    const Ie = 0;
-    const Bpl = audio.fec ? 1.1 : 1;
-    const Ipl = Ie + (95 - Ie) * (pl / Bpl);
-    const Id =
-      delay * 0.03 + (delay > 150 ? 0.1 * Math.pow(delay - 150, 2) : 0);
-    const R = R0 - Ipl - Id;
-    const MOS = 1 + 0.035 * R + (R * (R - 60) * (100 - R) * 7) / 1000000;
-    scores.audio = clamp(Math.round(MOS * 100) / 100, 1, 5);
+    const delay = 20 + audio.bufferDelay + audio.roundTripTime
+    const pl = audio.packetLoss / 100
+    const R0 = 100
+    const Ie = 0
+    const Bpl = audio.fec ? 1.1 : 1
+    const Ipl = Ie + (95 - Ie) * (pl / Bpl)
+    const Id = delay * 0.03 + (delay > 150 ? 0.1 * Math.pow(delay - 150, 2) : 0)
+    const R = R0 - Ipl - Id
+    const MOS = 1 + 0.035 * R + (R * (R - 60) * (100 - R) * 7) / 1000000
+    scores.audio = clamp(Math.round(MOS * 100) / 100, 1, 5)
   }
   if (video) {
-    const pixels = video.expectedWidth * video.expectedHeight;
-    const codecFactor = video.codec === "vp9" ? 1.2 : 1.0;
-    const delay = video.bufferDelay + video.roundTripTime;
+    const pixels = video.expectedWidth * video.expectedHeight
+    const codecFactor = video.codec === 'vp9' ? 1.2 : 1.0
+    const delay = video.bufferDelay + video.roundTripTime
     // These parameters are generated with a logaritmic regression
     // on some very limited test data for now
-    const base = 3.62 + 0.61 * Math.log((codecFactor * video.bitrate) / pixels);
+    const base = 3.22 + 0.61 * Math.log((codecFactor * video.bitrate) / pixels)
     const MOS =
       base -
       2 * Math.log(video.expectedFrameRate / video.frameRate) -
-      delay * 0.002;
-    scores.video = clamp(Math.round(MOS * 100) / 100, 1, 5);
+      delay * 0.002
+    scores.video = clamp(Math.round(MOS * 100) / 100, 1, 5)
   }
-  return scores;
+  return scores
 }
 
 function report(stats, score) {
@@ -83,11 +82,11 @@ function normalize(stats) {
           ...stats.video,
         }
       : undefined,
-  };
+  }
 }
 
 function clamp(value, min, max) {
-  return Math.max(min, Math.min(value, max));
+  return Math.max(min, Math.min(value, max))
 }
 
-module.exports = { score, report };
+module.exports = { score, report }
