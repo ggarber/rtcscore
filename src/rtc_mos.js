@@ -49,8 +49,14 @@ function score(stats) {
 }
 
 function report(stats, score) {
-  // fetch(POST, url, stats)
-  // TBD
+  const url = 'https://still-sea-10081.herokuapp.com/'
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({ stats, score }),
+  })
 }
 
 function normalize(stats) {
