@@ -7,6 +7,7 @@
  * codec: opus / vp8 / vp9 / h264 (only used for video)
  * fec: boolean (ony used for audio)
  * qp: number (not used yet)
+ * keyFrames: number (not used yet)
  * width: number; Resolution of the video received
  * expectedWidth: number; Resolution of the rendering widget
  * height: number; Resolution of the video received
@@ -38,10 +39,12 @@ function score(stats) {
     const delay = video.bufferDelay + video.roundTripTime;
     // These parameters are generated with a logaritmic regression
     // on some very limited test data for now
-    const base = 3.22 + 0.61 * Math.log((codecFactor * video.bitrate) / pixels);
+    // They are based on the bits per pixel per frame (bPPPF)
+    const bPPPF = (codecFactor * video.bitrate) / pixels / video.frameRate;
+    const base = clamp(2.1 * Math.log(bPPPF * 29) + 2.3, 1, 5);
     const MOS =
       base -
-      2 * Math.log(video.expectedFrameRate / video.frameRate) -
+      1.9 * Math.log(video.expectedFrameRate / video.frameRate) -
       delay * 0.002;
     scores.video = clamp(Math.round(MOS * 100) / 100, 1, 5);
   }

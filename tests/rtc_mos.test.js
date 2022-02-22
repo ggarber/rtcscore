@@ -105,19 +105,20 @@ test('score is average on average bitrate conditions', () => {
 test('score is not good on low bitrate conditions', () => {
   const scores = score({
     video: {
-      bitrate: 250000,
+      bitrate: 200000,
+      frameRate: 25,
     },
   });
 
-  expect(scores.video).toBeGreaterThan(2);
-  expect(scores.video).toBeLessThan(3);
+  expect(scores.video).toBeGreaterThan(1.5);
+  expect(scores.video).toBeLessThan(2.5);
 });
 
 test('score is not good on average bitrate conditions but low framerate', () => {
   const scores = score({
     video: {
-      bitrate: 600000,
-      frameRate: 15,
+      bitrate: 500000,
+      frameRate: 8,
       expectedFrameRate: 25,
     },
   });
@@ -137,6 +138,34 @@ test('score is average on average framerate conditions', () => {
 
   expect(scores.video).toBeGreaterThan(3);
   expect(scores.video).toBeLessThan(4);
+});
+
+test('score is average on control conditions one', () => {
+  const scores = score({
+    video: {
+      bitrate: 450000,
+      frameRate: 20,
+      width: 640,
+      height: 480,
+    },
+  });
+
+  expect(scores.video).toBeGreaterThan(3.5);
+  expect(scores.video).toBeLessThan(4);
+});
+
+test('score is average on control conditions two', () => {
+  const scores = score({
+    video: {
+      bitrate: 600000,
+      frameRate: 20,
+      width: 640,
+      height: 480,
+    },
+  });
+
+  expect(scores.video).toBeGreaterThan(4);
+  expect(scores.video).toBeLessThan(4.5);
 });
 
 test('score of video depends on bitrate', () => {
@@ -173,8 +202,8 @@ test('score of video depends on framerate', () => {
   const scores1 = score({
     video: {
       bitrate: 200000,
-      frameRate: 25,
-      expectedFrameRate: 30,
+      frameRate: 15,
+      expectedFrameRate: 15,
     },
   });
   const scores2 = score({
