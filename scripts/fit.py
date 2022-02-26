@@ -1,8 +1,8 @@
 import numpy as np
 from scipy.optimize import curve_fit
 
-def l( x, a, b, c ):
-    return a*np.log(np.absolute(b*x+c)) + c
+def l( x, a, b):
+    return a*np.log(np.absolute(x)) + b
 
 x = np.array([])
 y = np.array([])

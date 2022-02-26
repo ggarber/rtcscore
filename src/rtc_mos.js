@@ -41,7 +41,7 @@ function score(stats) {
     // on some very limited test data for now
     // They are based on the bits per pixel per frame (bPPPF)
     const bPPPF = (codecFactor * video.bitrate) / pixels / video.frameRate;
-    const base = clamp(2.1 * Math.log(bPPPF * 29) + 2.3, 1, 5);
+    const base = clamp(0.56 * Math.log(bPPPF) + 5.36, 1, 5);
     const MOS =
       base -
       1.9 * Math.log(video.expectedFrameRate / video.frameRate) -

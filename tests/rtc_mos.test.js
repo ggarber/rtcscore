@@ -110,8 +110,8 @@ test('score is not good on low bitrate conditions', () => {
     },
   });
 
-  expect(scores.video).toBeGreaterThan(1.5);
-  expect(scores.video).toBeLessThan(2.5);
+  expect(scores.video).toBeGreaterThan(2.5);
+  expect(scores.video).toBeLessThan(3.5);
 });
 
 test('score is not good on average bitrate conditions but low framerate', () => {
@@ -151,7 +151,7 @@ test('score is average on control conditions one', () => {
   });
 
   expect(scores.video).toBeGreaterThan(3.5);
-  expect(scores.video).toBeLessThan(4);
+  expect(scores.video).toBeLessThan(4.5);
 });
 
 test('score is average on control conditions two', () => {
@@ -164,7 +164,7 @@ test('score is average on control conditions two', () => {
     },
   });
 
-  expect(scores.video).toBeGreaterThan(4);
+  expect(scores.video).toBeGreaterThan(3.5);
   expect(scores.video).toBeLessThan(4.5);
 });
 
