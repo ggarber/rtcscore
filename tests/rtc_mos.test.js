@@ -18,7 +18,7 @@ test('score of audio+video stats gives audio+video scores', () => {
   expect(scores.video).toBeDefined();
 });
 
-test('score of audio is 4.5 in perfect conditions', () => {
+test('score of audio is close to 4.5 in perfect conditions', () => {
   const scores = score({ audio: { roundTripTime: 0, bufferDelay: 0 } });
   expect(scores.audio).toBeGreaterThan(4.4);
   expect(scores.audio).toBeLessThanOrEqual(4.5);
@@ -48,6 +48,36 @@ test('score of audio depends on packet loss', () => {
   expect(scores1.audio).toBeGreaterThan(scores2.audio);
 });
 
+test('score of audio depends on bitrate', () => {
+  const scores1 = score({
+    audio: {
+      bitrate: 100000,
+    },
+  });
+  const scores2 = score({
+    audio: {
+      packetLoss: 50000,
+    },
+  });
+  expect(scores1.audio).toBeGreaterThan(scores2.audio);
+});
+
+test('score of audio depends on fec', () => {
+  const scores1 = score({
+    audio: {
+      packetLoss: 10,
+      fec: true,
+    },
+  });
+  const scores2 = score({
+    audio: {
+      packetLoss: 10,
+      fec: false,
+    },
+  });
+  expect(scores1.audio).toBeGreaterThan(scores2.audio);
+});
+
 test('score of audio depends on buffer delay', () => {
   const scores1 = score({
     audio: {
@@ -60,6 +90,36 @@ test('score of audio depends on buffer delay', () => {
     },
   });
   expect(scores1.audio).toBeGreaterThan(scores2.audio);
+});
+
+test('score of audio is average on control conditions one', () => {
+  const scores = score({
+    audio: {
+      packetLoss: 15,
+    },
+  });
+  expect(scores.audio).toBeGreaterThanOrEqual(2.5);
+  expect(scores.audio).toBeLessThan(3);
+});
+
+test('score of audio is average on control conditions two', () => {
+  const scores = score({
+    audio: {
+      packetLoss: 30,
+    },
+  });
+  expect(scores.audio).toBeGreaterThanOrEqual(1.5);
+  expect(scores.audio).toBeLessThan(2);
+});
+
+test('score of audio is average on control conditions three', () => {
+  const scores = score({
+    audio: {
+      packetLoss: 50,
+    },
+  });
+  expect(scores.audio).toBeGreaterThanOrEqual(1);
+  expect(scores.audio).toBeLessThan(1.5);
 });
 
 test('score of video is 4.5 in perfect conditions', () => {
