@@ -151,6 +151,16 @@ test('score of video is 1 in worst framerate conditions', () => {
   expect(scores.video).toBe(1);
 });
 
+test('score of video is 1 if no framerate is received', () => {
+  const scores = score({
+    video: {
+      bitrate: 100000,
+      frameRate: 0,
+    },
+  });
+  expect(scores.video).toBe(1);
+});
+
 test('score is average on average bitrate conditions', () => {
   const scores = score({
     video: {
