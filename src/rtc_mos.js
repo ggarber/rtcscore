@@ -22,7 +22,7 @@ function score(stats) {
   if (audio) {
     // Audio MOS calculation is based on E-Model algorithm
     // Assume 20 packetization delay
-    const delay = 20 + audio.bufferDelay + audio.roundTripTime;
+    const delay = 20 + audio.bufferDelay + audio.roundTripTime / 2;
     const pl = audio.packetLoss;
     const R0 = 100;
     // Ignore audio bitrate in dtx mode
@@ -42,7 +42,7 @@ function score(stats) {
   if (video) {
     const pixels = video.expectedWidth * video.expectedHeight;
     const codecFactor = video.codec === 'vp9' ? 1.2 : 1.0;
-    const delay = video.bufferDelay + video.roundTripTime;
+    const delay = video.bufferDelay + video.roundTripTime / 2;
     // These parameters are generated with a logaritmic regression
     // on some very limited test data for now
     // They are based on the bits per pixel per frame (bPPPF)
