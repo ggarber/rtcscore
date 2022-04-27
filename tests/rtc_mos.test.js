@@ -314,3 +314,16 @@ test('score of video depends on resolution', () => {
   });
   expect(scores1.video).toBeGreaterThan(scores2.video);
 });
+
+test('score of video is 1 for 0 framerate', () => {
+  const scores = score({
+    video: {
+      bitrate: 200000,
+      expectedFrameRate: 0,
+      frameRate: 0,
+    },
+  });
+
+  expect(scores.video).toBeGreaterThanOrEqual(1);
+  expect(scores.video).toBeLessThan(1.1);
+});

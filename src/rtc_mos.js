@@ -47,13 +47,17 @@ function score(stats) {
     // These parameters are generated with a logaritmic regression
     // on some very limited test data for now
     // They are based on the bits per pixel per frame (bPPPF)
-    const bPPPF = (codecFactor * video.bitrate) / pixels / video.frameRate;
-    const base = clamp(0.56 * Math.log(bPPPF) + 5.36, 1, 5);
-    const MOS =
-      base -
-      1.9 * Math.log(video.expectedFrameRate / video.frameRate) -
-      delay * 0.002;
-    scores.video = clamp(Math.round(MOS * 100) / 100, 1, 5);
+    if (video.frameRate !== 0) {
+      const bPPPF = (codecFactor * video.bitrate) / pixels / video.frameRate;
+      const base = clamp(0.56 * Math.log(bPPPF) + 5.36, 1, 5);
+      const MOS =
+        base -
+        1.9 * Math.log(video.expectedFrameRate / video.frameRate) -
+        delay * 0.002;
+      scores.video = clamp(Math.round(MOS * 100) / 100, 1, 5);
+    } else {
+      scores.video = 1;
+    }
   }
   return scores;
 }
