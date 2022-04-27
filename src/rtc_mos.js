@@ -35,7 +35,9 @@ function score(stats) {
     const Ipl = Ie + (100 - Ie) * (pl / (pl + Bpl));
 
     const Id = delay * 0.03 + (delay > 150 ? 0.1 * delay - 150 : 0);
+    const R = clamp(R0 - Ipl - Id, 0, 100);
     const MOS = 1 + 0.035 * R + (R * (R - 60) * (100 - R) * 7) / 1000000;
+
     scores.audio = clamp(Math.round(MOS * 100) / 100, 1, 5);
   }
   if (video) {

@@ -34,6 +34,17 @@ test('score of audio is 1 in worst conditions', () => {
   expect(scores.audio).toBeLessThan(1.1);
 });
 
+test('score of audio is 1 with huge delay', () => {
+  const scores = score({
+    audio: {
+      packetLoss: 100,
+      roundTripTime: 1000000000,
+    },
+  });
+  expect(scores.audio).toBeGreaterThanOrEqual(1);
+  expect(scores.audio).toBeLessThan(1.1);
+});
+
 test('score of audio depends on packet loss', () => {
   const scores1 = score({
     audio: {
