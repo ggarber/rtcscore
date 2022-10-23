@@ -14,7 +14,7 @@ The library can be installed as an npm package dependency in your project:
 npm install rtcscore
 ```
 
-Given the simplicity of the code in some cases it can be more convenient to copy the code from `src/rtc_mos.js` even if that prevents the ability to use npm to get upgrades for new versions of the library.
+Given the simplicity of the code in some cases it can be more convenient to copy the code from `src/score.js` even if that prevents the ability to use npm to get upgrades for new versions of the library.
 
 ### How to calculate an audio/video score for a stream
 

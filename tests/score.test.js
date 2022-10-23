@@ -1,4 +1,4 @@
-const { score } = require('../src/rtc_mos');
+const { score } = require('../src/rtc_score');
 
 test('score of audio only stats gives audio only score', () => {
   const scores = score({ audio: {} });

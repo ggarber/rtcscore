@@ -1,7 +1,7 @@
 {
   "name": "rtcscore",
   "version": "0.0.2",
-  "main": "index.js",
+  "main": "src/score.js",
   "license": "MIT",
   "scripts": {
     "test": "jest",
