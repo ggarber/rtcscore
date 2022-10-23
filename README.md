@@ -2,12 +2,7 @@
 
 Library to calculate a Mean Opinion Score (MOS) from 1 to 5 for audio and video real time communications.
 
-The first version of the algorithm is based on a modified E-Model approach for audio and logarithmic regression for video based on some limited collected data.  The E-Model is a well known standard and the adaptations for wideband and opus codecs have been taken into account.
-
-The next version of the algorithm is expected to be trained with the data collected while using the current version of the algorithm.
-
-
-The library includes 2 APIs (score and report).   The former one is used to get a score for specific audio and video parameters of the communication and the later allows the applications to report the score assigned manually by users so that the data can be anonymously collected and used for training in next interations.
+The current version of the algorithm is based on a modified E-Model approach for audio and logarithmic regression for video based on some limited collected data.  The E-Model is a well known standard and the adaptations for wideband and opus codecs have been taken into account.
 
 ## How to use it
 
@@ -66,21 +61,3 @@ The updated list of audio and video parameters can be checked in [the source cod
 In a typical scenario the quality scores are calculated every X seconds (f.e. every 30 seconds) and aggregated at the end of the call to provide a single score per user.  Having that unique final score requires a temporal aggregation of the scores as well as an aggregation of the scores of multiple streams in multipary use cases.
 
 This library doesn't provide any support to do those aggregations but doesn't impose any limitation either.   The most basic aggregation is the naive approach of averaging the scores but any other strategy like taking the worse 10% percentile can be implemented and provide reasonable results.
-
-### How to report new training metrics 
-
-In addition to the `score()` API described above the library also includes a `report()` API for those applications that are already requesting a subjective score to users and want to report those values to our server to be used to improve the next versions of the algorithm.
-
-```
-report({
-    stats: {
-        audio: {
-            packetLoss: 2,     // 2%
-        },
-        video: {
-            bitrate: 200000,   // 200kpbs
-        }
-    },
-    score: 3
-})
-```

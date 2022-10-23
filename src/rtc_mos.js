@@ -62,17 +62,6 @@ function score(stats) {
   return scores;
 }
 
-function report({ stats, score, audioScore, videoScore }) {
-  const url = 'https://still-sea-10081.herokuapp.com/';
-  return fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({ stats, score, audioScore, videoScore }),
-  });
-}
-
 function normalize(stats) {
   return {
     audio: stats.audio
@@ -104,4 +93,4 @@ function clamp(value, min, max) {
   return Math.max(min, Math.min(value, max));
 }
 
-module.exports = { score, report };
+module.exports = { score };
