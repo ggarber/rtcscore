@@ -2,7 +2,7 @@
 
 Library to calculate a Mean Opinion Score (MOS) from 1 to 5 for audio and video real time communications.
 
-The current version of the algorithm is based on a modified E-Model approach for audio and logarithmic regression for video based on some limited collected data.  The E-Model is a well known standard and the adaptations for wideband and opus codecs have been taken into account.
+The current version of the algorithm is based on a modified E-Model approach for audio and logarithmic regression for video based on some limited collected data.  The E-Model is a welll known staaandard and the adaptations for wideband and opus codecs have been taken into account.
 
 ## How to use it
 
